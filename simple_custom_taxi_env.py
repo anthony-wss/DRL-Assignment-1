@@ -1,5 +1,3 @@
-import gym
-import numpy as np
 import importlib.util
 import time
 from IPython.display import clear_output
@@ -117,6 +115,8 @@ class SimpleTaxiEnv():
         passenger_loc_east  = int((taxi_row, taxi_col + 1) == self.passenger_loc)
         passenger_loc_west  = int((taxi_row, taxi_col - 1) == self.passenger_loc)
         passenger_loc_middle  = int( (taxi_row, taxi_col) == self.passenger_loc)
+
+        # 上下左右或腳踩的格子內有無乘客
         passenger_look = passenger_loc_north or passenger_loc_south or passenger_loc_east or passenger_loc_west or passenger_loc_middle
        
         destination_loc_north = int( (taxi_row - 1, taxi_col) == self.destination)
@@ -124,6 +124,8 @@ class SimpleTaxiEnv():
         destination_loc_east  = int( (taxi_row, taxi_col + 1) == self.destination)
         destination_loc_west  = int( (taxi_row, taxi_col - 1) == self.destination)
         destination_loc_middle  = int( (taxi_row, taxi_col) == self.destination)
+
+        # 上下左右或腳踩的格子內有無目的地
         destination_look = destination_loc_north or destination_loc_south or destination_loc_east or destination_loc_west or destination_loc_middle
 
         
@@ -200,7 +202,7 @@ def run_agent(agent_file, env_config, render=False):
         action = student_agent.get_action(obs)
 
         obs, reward, done, _ = env.step(action)
-        print('obs=',obs)
+        # print('obs=',obs)
         total_reward += reward
         step_count += 1
 
@@ -209,6 +211,7 @@ def run_agent(agent_file, env_config, render=False):
         if render:
             env.render_env((taxi_row, taxi_col),
                            action=action, step=step_count, fuel=env.current_fuel)
+            time.sleep(0.5)
 
     print(f"Agent Finished in {step_count} steps, Score: {total_reward}")
     return total_reward
@@ -218,5 +221,5 @@ if __name__ == "__main__":
         "fuel_limit": 5000
     }
     
-    agent_score = run_agent("student_agent.py", env_config, render=True)
+    agent_score = run_agent("student_agent.py", env_config, render=False)
     print(f"Final Score: {agent_score}")
