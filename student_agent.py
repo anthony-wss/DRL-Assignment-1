@@ -48,10 +48,11 @@ def get_action(obs):
     #       To prevent crashes, implement a fallback strategy for missing keys. 
     #       Otherwise, even if your agent performs well in training, it may fail during testing.
 
-    policy_model = PyTorchPolicy(16, 6, lr=0.0001)
-    policy_model.load("policy_model.pth")
-    state = get_agent_state(obs)
-    action, _ = policy_model.get_action(state)
+    # policy_model = PyTorchPolicy(16, 6, lr=0.0001)
+    # policy_model.load("policy_model.pth")
+    # state = get_agent_state(obs)
+    # action, _ = policy_model.get_action(state)
+    action = None
     return action
     # You can submit this random agent to evaluate the performance of a purely random strategy.
 
